@@ -20,7 +20,7 @@ public abstract class BaseController {
         return new Response<>(item);
     }
 
-    protected Response<ErrorResponse> respond(ErrorResponse errorResponse) {
+    protected <T> Response<ErrorResponse<T>> respond(ErrorResponse<T> errorResponse) {
         return new Response<>(errorResponse);
     }
 }

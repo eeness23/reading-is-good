@@ -4,6 +4,7 @@ import com.enes.readingisgood.security.filter.CustomAuthenticationFilter;
 import com.enes.readingisgood.security.filter.JWTFilter;
 import com.enes.readingisgood.security.service.TokenService;
 import com.enes.readingisgood.security.service.impl.JWTService;
+import com.enes.readingisgood.service.I18nService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,8 +42,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JWTFilter jwtFilter(JWTConfiguration jwtConfiguration, JWTService jwtService) {
-        return new JWTFilter(jwtConfiguration, jwtService);
+    public JWTFilter jwtFilter(JWTConfiguration jwtConfiguration, JWTService jwtService, I18nService i18nService) {
+        return new JWTFilter(jwtConfiguration, jwtService, i18nService);
     }
 
     @Override

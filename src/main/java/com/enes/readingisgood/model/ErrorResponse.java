@@ -1,9 +1,11 @@
 package com.enes.readingisgood.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class ErrorResponse {
+@AllArgsConstructor
+public class ErrorResponse<T> {
     private String errorCode;
-    private String errorDescription;
+    private T errorDescription;
 }
