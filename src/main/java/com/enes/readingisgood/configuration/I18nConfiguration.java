@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 @Configuration
-public class i18nConfiguration {
+public class I18nConfiguration {
     @Value("${i18n.base-path}")
     private String basePath;
 
