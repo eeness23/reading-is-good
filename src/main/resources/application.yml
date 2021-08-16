@@ -2,6 +2,14 @@ i18n:
   base-path: i18n/messages
   default-locale: en
 
+jwt:
+  key: Test!$
+  duration: 1M
+  headerPrefix: Bearer
+  claim:
+    id-key: id
+    role-key: role
+
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
