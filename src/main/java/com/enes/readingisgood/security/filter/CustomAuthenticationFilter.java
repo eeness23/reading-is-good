@@ -2,7 +2,7 @@ package com.enes.readingisgood.security.filter;
 
 import com.enes.readingisgood.entity.UserEntity;
 import com.enes.readingisgood.exception.UnauthorizedException;
-import com.enes.readingisgood.model.AuthenticationResponse;
+import com.enes.readingisgood.model.response.AuthenticationResponse;
 import com.enes.readingisgood.security.service.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;

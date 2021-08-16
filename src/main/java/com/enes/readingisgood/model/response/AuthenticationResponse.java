@@ -1,4 +1,4 @@
-package com.enes.readingisgood.model;
+package com.enes.readingisgood.model.response;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

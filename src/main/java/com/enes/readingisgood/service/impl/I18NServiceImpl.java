@@ -1,30 +1,35 @@
 package com.enes.readingisgood.service.impl;
 
-import com.enes.readingisgood.configuration.I18nConfiguration;
 import com.enes.readingisgood.service.I18nService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class I18NServiceImpl implements I18nService {
 
     private final MessageSource messageSource;
-    private final I18nConfiguration i18nConfiguration;
-    private static final String EXCEPTION_MESSAGE_SEPARATOR = ";";
+    private static final Pattern MESSAGE_SEPARATOR_PATTERN = Pattern.compile(";");
 
     @Override
-    public String[] getLocalizationMessage(String key, Locale locale, String... args) {
-        String message = messageSource.getMessage(key, args, locale);
-        return message.split(EXCEPTION_MESSAGE_SEPARATOR);
+    public List<String> getLocalizationMessage(String key, Locale locale, String... args) {
+        String message;
+        try {
+            message = messageSource.getMessage(key, args, locale);
+        } catch (NoSuchMessageException exception) {
+            message = getDefaultMessage(locale);
+        }
+        return MESSAGE_SEPARATOR_PATTERN.splitAsStream(message).collect(Collectors.toList());
     }
 
-    @Override
-    public String[] getLocalizationMessage(String key, String... args) {
-        Locale locale = new Locale(i18nConfiguration.getDefaultLocale());
-        return getLocalizationMessage(key, locale, args);
+    private String getDefaultMessage(Locale locale) {
+        return messageSource.getMessage("default.missing.message", null, locale);
     }
 }

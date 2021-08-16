@@ -1,26 +1,16 @@
 package com.enes.readingisgood.controller;
 
-import com.enes.readingisgood.model.ErrorResponse;
-import com.enes.readingisgood.model.Response;
-import com.enes.readingisgood.model.ResponseList;
-
-import java.util.List;
+import com.enes.readingisgood.model.response.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 public abstract class BaseController {
 
-    protected <T> Response<ResponseList<T>> respond(List<T> items) {
-        return new Response<>(new ResponseList<>(items));
+    protected <T> ResponseEntity<Response<T>> respond(T item) {
+        return ResponseEntity.ok(new Response<>(item));
     }
 
-    protected <T> Response<ResponseList<T>> respond(List<T> items, int page, int size, Long totalSize) {
-        return new Response<>(new ResponseList<>(items, page, size, totalSize));
-    }
-
-    protected <T> Response<T> respond(T item) {
-        return new Response<>(item);
-    }
-
-    protected <T> Response<ErrorResponse<T>> respond(ErrorResponse<T> errorResponse) {
-        return new Response<>(errorResponse);
+    protected <T> ResponseEntity<Response<T>> respond(T item, HttpStatus status) {
+        return ResponseEntity.status(status).body(new Response<>(item));
     }
 }

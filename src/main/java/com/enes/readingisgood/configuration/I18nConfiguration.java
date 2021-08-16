@@ -1,7 +1,7 @@
 package com.enes.readingisgood.configuration;
 
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -11,13 +11,12 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-@Configuration
-@Getter
-public class I18nConfiguration {
-    @Value("${i18n.base-path}")
-    private String basePath;
 
-    @Value("${i18n.default-locale}")
+@Data
+@Configuration
+@ConfigurationProperties(prefix = "i18n")
+public class I18nConfiguration {
+    private String basePath;
     private String defaultLocale;
 
     public static final String I18N_HEADER = "Accept-Language";
@@ -27,7 +26,6 @@ public class I18nConfiguration {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename(basePath);
         messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
-        messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }
 

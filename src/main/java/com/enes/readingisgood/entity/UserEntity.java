@@ -2,6 +2,7 @@ package com.enes.readingisgood.entity;
 
 import com.enes.readingisgood.enums.Status;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @Table(name = "users", indexes = @Index(columnList = "username"))
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserEntity extends BaseEntity implements UserDetails {
 
     @Column(name = "email", unique = true)
@@ -36,6 +38,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String surname;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Builder.Default
     private Collection<RoleEntity> roles = new ArrayList<>();
 
     @Override

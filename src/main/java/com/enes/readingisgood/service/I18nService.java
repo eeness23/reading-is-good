@@ -1,9 +1,8 @@
 package com.enes.readingisgood.service;
 
+import java.util.List;
 import java.util.Locale;
 
 public interface I18nService {
-    String[] getLocalizationMessage(String key, Locale locale, String... args);
-
-    String[] getLocalizationMessage(String key, String... args);
+    List<String> getLocalizationMessage(String key, Locale locale, String... args);
 }
