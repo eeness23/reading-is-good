@@ -9,6 +9,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -31,8 +32,10 @@ public class I18nConfiguration {
 
     @Bean
     public LocaleResolver resolver() {
+        Locale locale = new Locale(defaultLocale);
         AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-        localeResolver.setDefaultLocale(new Locale(defaultLocale));
+        localeResolver.setDefaultLocale(locale);
+        Locale.setDefault(locale);
         return localeResolver;
     }
 }
