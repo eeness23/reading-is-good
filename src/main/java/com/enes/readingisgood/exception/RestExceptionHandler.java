@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -71,6 +72,13 @@ public class RestExceptionHandler extends BaseController {
         log.error("A http message not readable exception occurred.Details: ", exception);
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         return generateErrorResponseFromKey("client.message-not-readable", locale, httpStatus);
+    }
+
+    @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
+    public ResponseEntity<?> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException exception, Locale locale) {
+        log.error("A http media type not supported exception occurred.Details: ", exception);
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        return generateErrorResponseFromKey("client.media-type.not-supported", locale, httpStatus);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
