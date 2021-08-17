@@ -39,7 +39,8 @@ public class OrderEntity extends BaseEntity {
     }
 
     public boolean isCancelableByUser(UserEntity currentUser) {
-        return currentUser.getId().equals(getId()) || currentUser.getRoles().contains("ROLE_ADMIN");
+        return currentUser.getId().equals(this.getId())
+                || currentUser.getRoles().stream().anyMatch(roleEntity -> roleEntity.getName().equals("ROLE_ADMIN"));
     }
 
     @PrePersist
