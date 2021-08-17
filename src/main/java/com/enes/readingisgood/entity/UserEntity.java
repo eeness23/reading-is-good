@@ -1,10 +1,11 @@
 package com.enes.readingisgood.entity;
 
 import com.enes.readingisgood.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +15,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@Data
 @Entity
-@Table(name = "users", indexes = @Index(columnList = "username"))
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Table(name = "users")
 public class UserEntity extends BaseEntity implements UserDetails {
 
     @Column(name = "email", unique = true)
@@ -41,13 +41,14 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private Status status = Status.ACTIVE;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @Builder.Default
     private Collection<RoleEntity> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer")
+    @JsonBackReference
     private Collection<OrderEntity> orders = new ArrayList<>();
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles
                 .stream()
@@ -56,21 +57,25 @@ public class UserEntity extends BaseEntity implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return getStatus().equals(Status.ACTIVE);
     }

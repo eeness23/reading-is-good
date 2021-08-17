@@ -3,8 +3,8 @@ package com.enes.readingisgood.model.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 public class Response<T> {
     private T data;
 }

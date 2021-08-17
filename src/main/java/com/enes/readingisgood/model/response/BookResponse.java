@@ -2,10 +2,12 @@ package com.enes.readingisgood.model.response;
 
 import com.enes.readingisgood.enums.Status;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Data
+@NoArgsConstructor
 public class BookResponse {
     private Long id;
     private String name;

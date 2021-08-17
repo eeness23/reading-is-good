@@ -81,7 +81,8 @@ public class RestExceptionHandler extends BaseController {
         return generateErrorResponseFromKey("client.type-mismatch", locale, httpStatus, exception.getName());
     }
 
-    @ExceptionHandler({NotFoundException.class, JWTException.class, UserAlreadyExistsException.class})
+    @ExceptionHandler({NotFoundException.class, JWTException.class,
+            UserException.class, BookException.class, OrderException.class})
     public ResponseEntity<?> handleException(BaseException exception, Locale locale) {
         log.error("An not found exception occurred.Details: ", exception);
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;

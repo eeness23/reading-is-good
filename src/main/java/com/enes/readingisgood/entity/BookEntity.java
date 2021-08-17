@@ -1,22 +1,20 @@
 package com.enes.readingisgood.entity;
 
 import com.enes.readingisgood.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
-@Data
 @Entity
-@Table(name = "books")
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "books")
 public class BookEntity extends BaseEntity {
 
     @Column(name = "name")
@@ -31,9 +29,18 @@ public class BookEntity extends BaseEntity {
     @Column(name = "price")
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @JsonBackReference
     private Set<OrderEntity> orders;
 
     @Column(name = "status", nullable = false)
     private Status status = Status.ACTIVE;
+
+    public void decreaseStock(Integer count) {
+        this.stock -= count;
+    }
+
+    public void increaseStock(Integer count) {
+        this.stock += count;
+    }
 }

@@ -2,7 +2,7 @@ package com.enes.readingisgood.service.impl;
 
 import com.enes.readingisgood.entity.UserEntity;
 import com.enes.readingisgood.exception.NotFoundException;
-import com.enes.readingisgood.exception.UserAlreadyExistsException;
+import com.enes.readingisgood.exception.UserException;
 import com.enes.readingisgood.repository.UserRepository;
 import com.enes.readingisgood.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             userEntity.setPassword(encryptedPassword);
             return userRepository.save(userEntity);
         } else {
-            throw new UserAlreadyExistsException("user.already-exists");
+            throw new UserException("user.already-exists");
         }
     }
 
