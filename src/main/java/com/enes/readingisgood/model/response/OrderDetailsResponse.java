@@ -1,8 +1,8 @@
 package com.enes.readingisgood.model.response;
 
-import com.enes.readingisgood.entity.BookEntity;
-import com.enes.readingisgood.entity.UserEntity;
 import com.enes.readingisgood.enums.OrderStatus;
+import com.enes.readingisgood.model.Book;
+import com.enes.readingisgood.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderDetailsResponse {
     private Long id;
-    private UserEntity customer;
-    private BookEntity book;
+    private User customer;
+    private Book book;
     private Integer quantity;
     private BigDecimal totalPrice;
     private OrderStatus orderStatus;

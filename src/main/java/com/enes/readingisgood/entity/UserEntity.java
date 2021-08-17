@@ -2,7 +2,6 @@ package com.enes.readingisgood.entity;
 
 import com.enes.readingisgood.enums.Status;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,6 +40,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private Status status = Status.ACTIVE;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<RoleEntity> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer")
@@ -48,7 +51,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private Collection<OrderEntity> orders = new ArrayList<>();
 
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles
                 .stream()
@@ -57,25 +59,21 @@ public class UserEntity extends BaseEntity implements UserDetails {
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isEnabled() {
         return getStatus().equals(Status.ACTIVE);
     }

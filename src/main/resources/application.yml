@@ -18,6 +18,12 @@ spring:
     password: test
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
   h2:
     console:
       enabled: true
+  flyway:
+    enabled: true
+
