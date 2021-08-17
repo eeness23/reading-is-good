@@ -4,10 +4,10 @@ i18n:
 
 jwt:
   key: Test!$
-  duration: 1M
+  duration: 1D
   header-prefix: Bearer
   claim:
-    id-key: id
+    username-key: username
     role-key: role
 
 spring:
@@ -16,8 +16,18 @@ spring:
     driver-class-name: org.h2.Driver
     username: test
     password: test
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 10
+      maximum-pool-size: 10
+      idle-timeout: 10000
+      max-lifetime: 100
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
   h2:
     console:
       enabled: true
+  flyway:
+    enabled: false

@@ -21,12 +21,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
@@ -35,11 +37,13 @@ public class OrderServiceImpl implements OrderService {
     private final UserService userService;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<OrderEntity> findAllOrdersByCustomerId(Long customerId, Pageable pageable) {
         return orderRepository.findAllByCustomerId(customerId, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public OrderEntity findById(Long id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("order.not-found"));
@@ -87,12 +91,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public OrderDetailsResponse getOrder(Long orderId) {
         OrderEntity orderEntity = findById(orderId);
         return orderMapper.entityToOrderDetailsResponse(orderEntity);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<OrderDetailsResponse> getOrdersByDateInterval(int pageNo, int pageSize,
                                                               LocalDate startDate, LocalDate endDate) {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
@@ -101,6 +107,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<OrderEntity> findAllByCustomerIdAndOrderStatus(Long id, OrderStatus orderStatusType) {
         return orderRepository.findAllByCustomerIdAndOrderStatus(id, orderStatusType);
     }

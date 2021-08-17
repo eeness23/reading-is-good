@@ -8,6 +8,7 @@ import com.enes.readingisgood.service.StatisticsService;
 import com.enes.readingisgood.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Month;
@@ -21,12 +22,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StatisticsServiceImpl implements StatisticsService {
 
     private final OrderService orderService;
     private final UserService userService;
 
     @Override
+    @Transactional(readOnly = true)
     public List<MonthlyStatisticResponse> getMonthlyStatistics() {
         List<MonthlyStatisticResponse> monthlyStatistics = new ArrayList<>();
         Long currentUserId = userService.getCurrentUserId();

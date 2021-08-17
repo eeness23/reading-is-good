@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
@@ -19,6 +20,7 @@ public class I18nServiceImpl implements I18nService {
     private static final Pattern MESSAGE_SEPARATOR_PATTERN = Pattern.compile(";");
 
     @Override
+    @Transactional(readOnly = true)
     public List<String> getLocalizationMessage(String key, Locale locale, String... args) {
         String message;
         try {

@@ -8,15 +8,18 @@ import com.enes.readingisgood.repository.BookRepository;
 import com.enes.readingisgood.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public BookEntity findById(Long id) {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("book.not-found"));

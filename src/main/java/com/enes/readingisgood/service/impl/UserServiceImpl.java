@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +19,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional(readOnly = true)
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("user.not-found", username));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserEntity findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("user.not-found", String.valueOf(id)));
@@ -44,11 +47,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserEntity getCurrentUser() {
         return findById(getCurrentUserId());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Long getCurrentUserId() {
         return Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
