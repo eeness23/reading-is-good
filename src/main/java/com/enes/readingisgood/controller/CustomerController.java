@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,12 +21,14 @@ public class CustomerController extends BaseController {
 
     private final CustomerService customerService;
 
+    @PreAuthorize("permitAll()")
     @PostMapping
     public ResponseEntity<Response<Long>> saveCustomer(@RequestBody @Valid CustomerRequest customerRequest) {
         Long id = customerService.saveCustomer(customerRequest);
         return respond(id, HttpStatus.CREATED);
     }
 
+    @Secured("ROLE_CUSTOMER")
     @GetMapping("/orders")
     public ResponseEntity<Response<Page<CustomerOrderResponse>>> getCustomerOrders(@RequestParam(defaultValue = "0") int pageNo,
                                                                                    @RequestParam(defaultValue = "10") int pageSize) {

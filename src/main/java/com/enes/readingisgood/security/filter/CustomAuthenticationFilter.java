@@ -24,8 +24,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
-    private static final AntPathRequestMatcher LOGIN_URL =
-            new AntPathRequestMatcher("/auth/login", "POST");
+    public static final String LOGIN_URL = "/auth/login";
+    private static final AntPathRequestMatcher LOGIN_URL_MATCHER =
+            new AntPathRequestMatcher(LOGIN_URL, "POST");
 
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager,
                                       TokenService tokenService) {
@@ -33,7 +34,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
 
-        setRequiresAuthenticationRequestMatcher(LOGIN_URL);
+        setRequiresAuthenticationRequestMatcher(LOGIN_URL_MATCHER);
     }
 
     @Override

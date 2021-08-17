@@ -19,6 +19,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.enes.readingisgood.security.filter.CustomAuthenticationFilter.LOGIN_URL;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true, prePostEnabled = true, securedEnabled = true)
@@ -28,6 +30,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+    private final JWTConfiguration jwtConfiguration;
+    private final JWTService jwtService;
+    private final I18nService i18nService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,20 +47,27 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JWTFilter jwtFilter(JWTConfiguration jwtConfiguration, JWTService jwtService, I18nService i18nService) {
+    public JWTFilter jwtFilter() {
         return new JWTFilter(jwtConfiguration, jwtService, i18nService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter =
+                new CustomAuthenticationFilter(authenticationManager(), tokenService);
+
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .headers().frameOptions().sameOrigin() //for h2 db
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()//for h2 db
+                .antMatchers(LOGIN_URL).permitAll()//for h2 db
+                .anyRequest().authenticated()
                 .and()
-                .addFilter(new CustomAuthenticationFilter(authenticationManager(), tokenService));
+                .addFilter(customAuthenticationFilter)
+                .addFilterAfter(jwtFilter(),customAuthenticationFilter.getClass());
+
     }
 }

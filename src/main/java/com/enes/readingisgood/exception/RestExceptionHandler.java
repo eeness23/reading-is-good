@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -35,12 +36,20 @@ public class RestExceptionHandler extends BaseController {
         return generateErrorResponseFromKey("system.error.occurred", locale);
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException exception,
+                                                               Locale locale) {
+        log.error("An access denied exception occurred.Details: ", exception);
+        return generateErrorResponseFromKey("auth.access-denied", locale);
+    }
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ResponseEntity<?> handleMethodNotSupportedException(HttpRequestMethodNotSupportedException exception,
                                                                Locale locale) {
         log.error("A http request method not supported exception occurred.Details: ", exception);
-        return generateErrorResponseFromKey("common.client.methodNotSupported", locale, exception.getMethod());
+        return generateErrorResponseFromKey("client.method-not-supported", locale, exception.getMethod());
     }
 
     @ExceptionHandler(JWTException.class)
@@ -77,13 +86,13 @@ public class RestExceptionHandler extends BaseController {
     public ResponseEntity<?> handleMethodArgumentTypeMismatchException(
             MethodArgumentTypeMismatchException exception, Locale locale) {
         log.error("A method argument type mismatch exception occurred.Details: ", exception);
-        return generateErrorResponseFromKey("common.client.typeMismatch", locale,
+        return generateErrorResponseFromKey("client.type-mismatch", locale,
                 exception.getName());
     }
 
     private ResponseEntity<?> generateFieldErrorResponse(BindingResult bindingResult,
                                                          Locale locale) {
-        List<String> errorDetails = i18nService.getLocalizationMessage("common.client.requiredField", locale);
+        List<String> errorDetails = i18nService.getLocalizationMessage("client.required-field", locale);
         String code = errorDetails.get(0);
         String message = errorDetails.get(1);
 
