@@ -26,30 +26,18 @@ public class OrderEntity extends BaseEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
-
     @Column(name = "order_status")
     private OrderStatus orderStatus = OrderStatus.PURCHASED;
 
-    private BigDecimal calculateTotalPrice() {
+    public BigDecimal calculateTotalPrice() {
         BigDecimal bookPrice = book.getPrice();
         BigDecimal quantity = BigDecimal.valueOf(this.quantity);
         return bookPrice.multiply(quantity);
     }
 
     public boolean isCancelableByUser(UserEntity currentUser) {
-        return currentUser.getId().equals(this.getId())
+        return currentUser.getId().equals(customer.getId())
                 || currentUser.getRoles().stream().anyMatch(roleEntity -> roleEntity.getName().equals("ROLE_ADMIN"));
     }
 
-    @PrePersist
-    public void prePersist() {
-        this.totalPrice = calculateTotalPrice();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        this.totalPrice = calculateTotalPrice();
-    }
 }

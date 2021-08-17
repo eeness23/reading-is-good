@@ -40,7 +40,7 @@ public class RestExceptionHandler extends BaseController {
     public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException exception,
                                                          Locale locale) {
         log.error("An access denied exception occurred.Details: ", exception);
-        HttpStatus httpStatus = HttpStatus.METHOD_NOT_ALLOWED;
+        HttpStatus httpStatus = HttpStatus.FORBIDDEN;
         return generateErrorResponseFromKey("auth.access-denied", locale, httpStatus);
     }
 

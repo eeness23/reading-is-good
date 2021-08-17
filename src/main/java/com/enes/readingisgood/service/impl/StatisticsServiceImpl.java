@@ -51,7 +51,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
             for (OrderEntity orderEntity : orderEntities) {
                 totalBookCount += orderEntity.getQuantity();
-                totalPurchasedAmount = totalPurchasedAmount.add(orderEntity.getTotalPrice());
+                totalPurchasedAmount = totalPurchasedAmount.add(orderEntity.calculateTotalPrice());
             }
 
             MonthlyStatisticResponse monthlyStatistic = MonthlyStatisticResponse.builder()
