@@ -67,7 +67,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(customAuthenticationFilter)
-                .addFilterAfter(jwtFilter(),customAuthenticationFilter.getClass());
+                .addFilterAfter(jwtFilter(), customAuthenticationFilter.getClass());
 
     }
 }

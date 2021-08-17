@@ -23,7 +23,7 @@ public class OrderEntity extends BaseEntity {
     private BookEntity book;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "order_status")
     private OrderStatus orderStatus = OrderStatus.PURCHASED;

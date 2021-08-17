@@ -1,8 +1,8 @@
 package com.enes.readingisgood.service.impl;
 
 import com.enes.readingisgood.entity.UserEntity;
+import com.enes.readingisgood.exception.NotFoundException;
 import com.enes.readingisgood.exception.UserAlreadyExistsException;
-import com.enes.readingisgood.exception.UserNotFoundException;
 import com.enes.readingisgood.repository.UserRepository;
 import com.enes.readingisgood.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("user.not-found", username));
+                .orElseThrow(() -> new NotFoundException("user.not-found", username));
     }
 
     @Override
     public UserEntity findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("user.not-found", String.valueOf(id)));
+                .orElseThrow(() -> new NotFoundException("user.not-found", String.valueOf(id)));
     }
 
     @Override

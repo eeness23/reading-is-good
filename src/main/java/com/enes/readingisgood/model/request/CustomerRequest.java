@@ -10,20 +10,20 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class CustomerRequest {
 
-    @NotBlank(message = "common.required.field")
+    @NotBlank(message = "dto.required.field")
     private String name;
 
-    @NotBlank(message = "common.required.field")
+    @NotBlank(message = "dto.required.field")
     private String surname;
 
-    @NotBlank(message = "common.required.field")
-    @Email(message = "common.email.invalid")
+    @NotBlank(message = "dto.required.field")
+    @Email(message = "dto.email.invalid")
     private String email;
 
-    @NotBlank(message = "common.required.field")
+    @NotBlank(message = "dto.required.field")
     private String username;
 
-    @NotBlank(message = "common.required.field")
+    @NotBlank(message = "dto.required.field")
     private String password;
 
 }

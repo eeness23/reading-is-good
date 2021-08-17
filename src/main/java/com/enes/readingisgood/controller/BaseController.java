@@ -13,4 +13,8 @@ public abstract class BaseController {
     protected <T> ResponseEntity<Response<T>> respond(T item, HttpStatus status) {
         return ResponseEntity.status(status).body(new Response<>(item));
     }
+
+    protected ResponseEntity<Void> respondSuccess() {
+        return ResponseEntity.ok().build();
+    }
 }
