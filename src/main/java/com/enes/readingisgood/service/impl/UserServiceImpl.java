@@ -6,6 +6,7 @@ import com.enes.readingisgood.exception.UserNotFoundException;
 import com.enes.readingisgood.repository.UserRepository;
 import com.enes.readingisgood.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,4 +36,11 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("user.already-exists");
         }
     }
+
+    @Override
+    public UserEntity getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        return findByUsername(username);
+    }
+
 }

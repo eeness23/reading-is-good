@@ -6,4 +6,6 @@ public interface UserService {
     UserEntity findByUsername(String username);
 
     UserEntity saveUser(UserEntity userEntity);
+
+    UserEntity getCurrentUser();
 }

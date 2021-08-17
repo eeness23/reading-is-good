@@ -37,9 +37,15 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "surname")
     private String surname;
 
+    @Column(name = "status", nullable = false)
+    private Status status = Status.ACTIVE;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
     private Collection<RoleEntity> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer")
+    private Collection<OrderEntity> orders = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

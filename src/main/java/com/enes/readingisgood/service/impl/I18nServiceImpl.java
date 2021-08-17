@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class I18NServiceImpl implements I18nService {
+public class I18nServiceImpl implements I18nService {
 
     private final MessageSource messageSource;
     private static final Pattern MESSAGE_SEPARATOR_PATTERN = Pattern.compile(";");

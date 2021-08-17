@@ -4,7 +4,7 @@ i18n:
 
 jwt:
   key: Test!$
-  duration: 1M
+  duration: 10M
   header-prefix: Bearer
   claim:
     id-key: id

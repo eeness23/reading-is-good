@@ -7,16 +7,14 @@ import java.util.stream.Stream;
 
 @Getter
 @RequiredArgsConstructor
-public enum Status {
-
-    ACTIVE(1),
-    PASSIVE(0),
-    DELETED(-1);
+public enum OrderStatus {
+    PURCHASED(1),
+    CANCELLED(0);
 
     private final Integer value;
 
-    public static Status of(Integer value) {
-        return Stream.of(Status.values())
+    public static OrderStatus of(Integer value) {
+        return Stream.of(OrderStatus.values())
                 .filter(status -> status.getValue().equals(value))
                 .findFirst()
                 .orElseThrow();
