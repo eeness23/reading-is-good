@@ -32,7 +32,7 @@ public class JWTConfiguration {
 
     @Data
     public static class Claim {
-        private String idKey;
+        private String usernameKey;
         private String roleKey;
     }
 }

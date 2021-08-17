@@ -24,6 +24,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("user.not-found", String.valueOf(id)));
+    }
+
+    @Override
     public UserEntity saveUser(UserEntity userEntity) {
         boolean existsByUsernameOrEmail =
                 userRepository.existsByUsernameOrEmail(userEntity.getUsername(), userEntity.getEmail());
@@ -39,8 +45,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getCurrentUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        return findByUsername(username);
+        return findById(getCurrentUserId());
+    }
+
+    @Override
+    public Long getCurrentUserId() {
+        return Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
 }

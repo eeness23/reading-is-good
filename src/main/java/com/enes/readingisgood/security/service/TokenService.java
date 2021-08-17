@@ -14,5 +14,7 @@ public interface TokenService {
 
     String getUsernameFromJWT(DecodedJWT token);
 
+    Long getIdFromJWT(DecodedJWT token);
+
     Collection<SimpleGrantedAuthority> getRolesFromJWT(DecodedJWT token);
 }

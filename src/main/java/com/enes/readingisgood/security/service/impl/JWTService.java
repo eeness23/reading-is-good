@@ -30,7 +30,7 @@ public class JWTService implements TokenService {
     @Override
     public String generateToken(UserEntity user, String issuer) {
         return JWT.create()
-                .withSubject(user.getUsername())
+                .withSubject(String.valueOf(user.getId()))
                 .withExpiresAt(jwtConfiguration.getExpiredTime())
                 .withIssuer(issuer)
                 .withIssuedAt(new Date())
@@ -39,7 +39,7 @@ public class JWTService implements TokenService {
                                 .stream()
                                 .map(RoleEntity::getName)
                                 .collect(Collectors.toList()))
-                .withClaim(jwtConfiguration.getClaim().getIdKey(), user.getId())
+                .withClaim(jwtConfiguration.getClaim().getUsernameKey(), user.getUsername())
                 .sign(jwtConfiguration.getAlgorithm());
     }
 
@@ -60,8 +60,13 @@ public class JWTService implements TokenService {
 
     @Override
     public String getUsernameFromJWT(DecodedJWT token) {
-        return token.getSubject();
+        return token.getClaim(jwtConfiguration.getClaim().getUsernameKey()).asString();
 
+    }
+
+    @Override
+    public Long getIdFromJWT(DecodedJWT token) {
+        return Long.valueOf(token.getSubject());
     }
 
     @Override

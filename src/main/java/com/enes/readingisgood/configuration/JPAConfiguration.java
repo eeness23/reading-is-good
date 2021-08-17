@@ -4,12 +4,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
-@EnableJpaAuditing
 //@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
+@EnableJpaAuditing
 public class JPAConfiguration {
 
+//    private static Long count = 1L;
+//
 //    @Bean
-//    public AuditorAware<String> auditorProvider() {
-//        return () -> Optional.of(SecurityContextHolder.getContext().getAuthentication().getName());
+//    public AuditorAware<Long> auditorProvider(UserService userService) {
+//        return () -> Optional.of(count++);
 //    }
 }

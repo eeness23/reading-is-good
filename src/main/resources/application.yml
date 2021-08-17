@@ -7,7 +7,7 @@ jwt:
   duration: 10M
   header-prefix: Bearer
   claim:
-    id-key: id
+    username-key: username
     role-key: role
 
 spring:

@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Page<CustomerOrderResponse> getCustomerOrders(int pageNo, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
-        Long userId = userService.getCurrentUser().getId();
+        Long userId = userService.getCurrentUserId();
         return orderService.findAllOrdersByCustomerId(userId, pageRequest)
                 .map(orderMapper::entityToCustomerOrderResponse);
     }

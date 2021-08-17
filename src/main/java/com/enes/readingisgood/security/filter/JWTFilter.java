@@ -44,11 +44,12 @@ public class JWTFilter extends OncePerRequestFilter {
         if (optionalToken.isPresent()) {
             try {
                 DecodedJWT decodedJWT = jwtService.decodeJWT(optionalToken.get());
-                String username = jwtService.getUsernameFromJWT(decodedJWT);
+                Long userId = jwtService.getIdFromJWT(decodedJWT);
                 Collection<SimpleGrantedAuthority> roles = jwtService.getRolesFromJWT(decodedJWT);
 
                 UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(username, null, roles);
+                        new UsernamePasswordAuthenticationToken(userId, null, roles);
+
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(auth);
             } catch (JWTException exception) {
