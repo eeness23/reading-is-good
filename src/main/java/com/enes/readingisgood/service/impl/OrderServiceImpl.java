@@ -23,6 +23,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -97,6 +98,11 @@ public class OrderServiceImpl implements OrderService {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
         return orderRepository.findAllByCreatedAtBetween(startDate.atStartOfDay(), endDate.atStartOfDay(), pageRequest)
                 .map(orderMapper::entityToOrderDetailsResponse);
+    }
+
+    @Override
+    public List<OrderEntity> findAllByCustomerIdAndOrderStatus(Long id, OrderStatus orderStatusType) {
+        return orderRepository.findAllByCustomerIdAndOrderStatus(id, orderStatusType);
     }
 
 
