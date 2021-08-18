@@ -14,6 +14,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @RestController
@@ -25,7 +26,7 @@ public class OrderController extends BaseController {
 
     @PreAuthorize("permitAll()")
     @PostMapping
-    public ResponseEntity<Response<OrderResponse>> createOrder(@RequestBody OrderRequest orderRequest) {
+    public ResponseEntity<Response<OrderResponse>> createOrder(@RequestBody @Valid OrderRequest orderRequest) {
         OrderResponse orderResponse = orderService.createOrder(orderRequest);
         return respond(orderResponse, HttpStatus.CREATED);
     }

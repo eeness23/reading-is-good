@@ -5,6 +5,7 @@ import com.enes.readingisgood.exception.UnauthorizedException;
 import com.enes.readingisgood.model.request.LoginRequest;
 import com.enes.readingisgood.model.response.AuthenticationResponse;
 import com.enes.readingisgood.model.response.ErrorResponse;
+import com.enes.readingisgood.model.response.Response;
 import com.enes.readingisgood.security.service.TokenService;
 import com.enes.readingisgood.service.I18nService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,7 +81,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             UserEntity userEntity = (UserEntity) principal;
             String token =
                     tokenService.generateToken(userEntity, request.getRequestURL().toString());
-            AuthenticationResponse authenticationResponse = new AuthenticationResponse(token);
+            Response<AuthenticationResponse> authenticationResponse =
+                    new Response<>(new AuthenticationResponse(token));
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), authenticationResponse);
         }

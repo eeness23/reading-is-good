@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+  reading-is-good-enes:
+    image: eeness023/reading-is-good-enes:v1.0
+    container_name: reading-is-good-enes
+    ports:
+      - 9090:9090

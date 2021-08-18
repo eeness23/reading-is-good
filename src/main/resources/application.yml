@@ -33,3 +33,7 @@ spring:
       enabled: true
   flyway:
     enabled: true
+  application:
+    name: reading-is-good
+server:
+  port: 9090
