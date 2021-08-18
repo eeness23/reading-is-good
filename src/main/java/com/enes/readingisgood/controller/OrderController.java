@@ -24,21 +24,21 @@ public class OrderController extends BaseController {
 
     private final OrderService orderService;
 
-    @PreAuthorize("permitAll()")
+    @Secured("ROLE_CUSTOMER")
     @PostMapping
     public ResponseEntity<Response<OrderResponse>> createOrder(@RequestBody @Valid OrderRequest orderRequest) {
         OrderResponse orderResponse = orderService.createOrder(orderRequest);
         return respond(orderResponse, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/{orderId}/cancel")
     public ResponseEntity<Response<OrderResponse>> cancelOrder(@PathVariable Long orderId) {
         OrderResponse orderResponse = orderService.cancelOrder(orderId);
         return respond(orderResponse);
     }
 
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{orderId}")
     public ResponseEntity<Response<OrderDetailsResponse>> getOrder(@PathVariable Long orderId) {
         OrderDetailsResponse OrderDetailsResponse = orderService.getOrder(orderId);

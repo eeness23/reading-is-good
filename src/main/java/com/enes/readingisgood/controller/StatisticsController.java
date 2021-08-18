@@ -5,7 +5,7 @@ import com.enes.readingisgood.model.response.Response;
 import com.enes.readingisgood.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ import java.util.List;
 public class StatisticsController extends BaseController {
     private final StatisticsService statisticsService;
 
-    @PreAuthorize("hasRole('CUSTOMER')")
+    @Secured("ROLE_CUSTOMER")
     @GetMapping("/monthly")
     public ResponseEntity<Response<List<MonthlyStatisticResponse>>> getMonthlyStatistics() {
         return respond(statisticsService.getMonthlyStatistics());

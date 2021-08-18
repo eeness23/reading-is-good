@@ -9,7 +9,6 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Locale;
 
 

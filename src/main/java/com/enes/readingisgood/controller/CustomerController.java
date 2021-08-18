@@ -21,7 +21,7 @@ public class CustomerController extends BaseController {
 
     private final CustomerService customerService;
 
-    @PreAuthorize("permitAll()")
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public ResponseEntity<Response<Long>> saveCustomer(@RequestBody @Valid CustomerRequest customerRequest) {
         Long id = customerService.saveCustomer(customerRequest);

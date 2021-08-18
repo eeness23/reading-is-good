@@ -6,7 +6,6 @@ import com.enes.readingisgood.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,7 +15,6 @@ public class OrderDetailsResponse {
     private User customer;
     private Book book;
     private Integer quantity;
-    private BigDecimal totalPrice;
     private OrderStatus orderStatus;
     private LocalDateTime createdAt;
     private Long createdBy;

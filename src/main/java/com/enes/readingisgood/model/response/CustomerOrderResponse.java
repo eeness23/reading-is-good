@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CustomerOrderResponse {
     private Long id;
-    private String createdBy;
-    private LocalDateTime createdDate;
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
+    private LocalDateTime createdAt;
+    private Long createdBy;
+    private LocalDateTime updatedAt;
+    private Long updatedBy;
     private BookResponse book;
     private OrderStatus orderStatus;
 }
