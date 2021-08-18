@@ -30,6 +30,10 @@ Default port: 9090 (changeable with docker-compose)
 You can run it with docker-compose as I have published the docker image to docker hub. <br>
 `docker-compose -f docker-compose-prod.yml up -d`
 
+*some windows users are getting errors about docker-compose.If you have it, try the code below.*<br>
+`docker pull eeness023/reading-is-good-enes:latest` <br>
+`docker-compose -f docker-compose-prod.yml up -d`
+
 2-) Maven and Docker Image for local <br>
 First we need to package then building the docker image.We can run it with docker-compose. <br>
 `mvn clean package` <br>
